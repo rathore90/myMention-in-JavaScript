@@ -1,0 +1,49 @@
+<style>
+    #list {
+      background: #ddd;
+      height: 0;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      transition: all .5s ease;
+      top: 5%;
+      width: 50%;
+    }
+    </style>
+    
+    <!DOCTYPE html>
+    <html>
+    <body>
+    
+    <textarea type="text" id="fname" onkeyup="myMention()"></textarea>
+    
+      <ul id="list">
+        <li><a href="#">Child Link</a></li>
+        <li><a href="#">Child Link</a></li>
+        <li><a href="#">Child Link</a></li>
+        <li><a href="#">Child Link</a></li>
+      </ul>
+    
+    <script>
+    function myMention() {
+      var x = document.getElementById("fname");
+      var matching = x.value;
+      var at_the_rate = matching.match("@");
+      if(at_the_rate == null){
+          at_the_rate = -1;
+      }
+      console.log(at_the_rate);
+      if(at_the_rate.length > 0){
+            document.getElementById("list").style.height = "auto";
+          document.getElementById("list").style.opacity = "1";
+          document.getElementById("list").style.transform = "translateY(0)";
+      }else{
+          document.getElementById("list").style.height = "0";
+          document.getElementById("list").style.opacity = "0";
+      }
+    }
+    </script>
+    
+    </body>
+    </html>
+    
