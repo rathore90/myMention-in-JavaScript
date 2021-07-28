@@ -49,6 +49,25 @@
     font-size: 18px;
     padding: 10px;
   }
+
+  #textarea {
+    -moz-appearance: textfield-multiline;
+    -webkit-appearance: textarea;
+    border: 2px solid #333333;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    height: auto;
+    overflow: auto;
+    padding: 10px;
+    resize: both;
+    width: 400px;
+    font-size: 18px;
+    background: #ffff;
+    border-radius: 10px;
+  }
+  #textarea:focus{
+    outline: none;
+  }
 </style>
     
 <!DOCTYPE html>
@@ -56,41 +75,72 @@
 <body> 
 <div class="container">
   <div class="dropdown">
-  <h1>My Mentions</h1>
-  <textarea type="text" id="fname" onkeyup="myMention()"></textarea>
-    <div id="myDropdown" class="dropdown-content">
-      <div class="options" onclick="select_option('pardeep')">Pardeep</div>
-      <div class="options" onclick="select_option('pre')">Prerana</div>
-      <div class="options" onclick="select_option('chris')">Chris</div>
-      <div class="options" onclick="select_option('sam')">Sam</div>
-      <div class="options" onclick="select_option('elysio')">Elysio</div>
-    </div>
+    <h1>My Mentions</h1>
+    <div class="textarea_div" id="textarea" contenteditable type="text" onkeyup="myMention(event)"></div>
   </div>
 </div>
 
+
+<!-- <label for="ice-cream-choice">Choose a flavor:</label>
+<input list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice" />
+
+<datalist id="ice-cream-flavors">
+  <option value="Chocolate">
+  <option value="Coconut">
+  <option value="Mint">
+  <option value="Strawberry">
+  <option value="Vanilla">
+</datalist> -->
+
 <script>
-function myMention() {
-  var x = document.getElementById("fname");
-  var matching = x.value;
-  var at_the_rate = matching.match("@");
-  if(at_the_rate == null){
-      at_the_rate = -1;
-  }
-  console.log(at_the_rate);
-  if(at_the_rate.length > 0){
-    document.getElementById("myDropdown").classList.add("show");
-  }else{
-    document.getElementById("myDropdown").classList.remove("show");
+function myMention(e) {
+  console.log(e.key);
+  let textArea = document.getElementById("textarea");
+  let matching = textArea.textContent;
+  let format = matching.match("@"); 
+
+  if(format != null){
+    if(format.length > 0){
+      let createDropdown = document.createElement("div");
+      createDropdown.id = 'myDropdown';
+      createDropdown.classList.add("dropdown-content");
+      
+      for(let i = 0; i < 6; i++){
+        let createOptions = document.createElement("div");
+        createOptions.classList.add("options");
+        createOptions.innerHTML = "Pardeep";
+        createOptions.onclick = function () {
+          select_option('Pardeep');
+        }
+        createDropdown.append(createOptions);
+      }
+      textArea.append(createDropdown);
+      document.getElementById('myDropdown').classList.add("show");
+    }
+    else{
+        document.getElementById('myDropdown').classList.remove("show");
+        document.getElementById('myDropdown').remove();
+    }
   }
 }
 
 function select_option(username){
-  var appendMention = document.getElementById("fname");
-  appendMention.value += username;
-  var currentString = appendMention.value;
-  var updateString = currentString.replace(/[^a-zA-Z !?]/g, "");
-  appendMention.value = updateString;
-  document.getElementById("myDropdown").classList.remove("show");
+  let appendMention = document.getElementById("textarea");
+  let myDropdown = document.getElementsByClassName("dropdown-content")[0];
+  let createSpan = document.createElement('span');
+  createSpan.classList.add("span-element");
+  createSpan.innerHTML = username;
+  console.log("UserName", username);
+  console.log("UserName", appendMention);
+  appendMention.append(createSpan);
+
+  let currentString = appendMention.childNodes[0].nodeValue;
+  let updateString = currentString.toString().replace(/[^a-zA-Z !?]/g, "");
+  appendMention.childNodes[0].nodeValue = updateString;
+  if(myDropdown){
+    myDropdown.classList.remove("show");
+    myDropdown.remove();
+  }
 }
 </script>
     

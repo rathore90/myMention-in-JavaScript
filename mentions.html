@@ -1,0 +1,155 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropbtn:hover,
+  .dropbtn:focus {
+    background-color: #2980B9;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content .options {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown .options:hover {
+    background-color: #ddd;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .container {
+    height: 100%;
+    width: 100%;
+    background-color: lightcoral;
+  }
+
+  .dropdown {
+    position: relative;
+    height: 50vh;
+    width: 35%;
+    margin: auto;
+    padding: 10vh;
+  }
+
+  textarea {
+    height: 15%;
+    width: 100%;
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  #textarea {
+    -moz-appearance: textfield-multiline;
+    -webkit-appearance: textarea;
+    border: 2px solid #333333;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    height: auto;
+    overflow: auto;
+    padding: 10px;
+    resize: both;
+    width: 400px;
+    font-size: 18px;
+    background: #ffff;
+  }
+
+  #mention-dropdown{
+    background-color: #fff;
+    width: 50%;
+    margin-top: 1px;
+    box-shadow: 0 1px 2px rgb(204 204 204);
+    border-radius: 0 1px 2px 2px;
+    overflow: hidden;
+    display: none;
+    overflow-y: auto;
+    z-index: 9;
+    transition: width 1s ease-in-out;
+  }
+
+  .option{
+    padding: 10px 5px;
+    cursor: pointer;
+  }
+
+  .option:hover{
+    background-color: rgb(201, 189, 189);
+  }
+
+  #textarea:focus {
+    outline: none;
+  }
+</style>
+
+<!DOCTYPE html>
+<html>
+
+<body>
+  <div class="container">
+    <div class="dropdown">
+      <h1>My Mentions</h1>
+      <div class="textarea_div" id="textarea" contenteditable type="text"
+        onkeyup="myMention(event)"></div>
+        <div id="mention-dropdown">
+          <div class="option" onclick="selectUser('Pardeep')">Pardeep</div>
+          <div class="option" onclick="selectUser('Pre')">Pre</div>
+          <div class="option" onclick="selectUser('Jack')">Jack</div>
+          <div class="option" onclick="selectUser('Sandeep')">Sandeep</div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    let dropdown = document.getElementById("mention-dropdown");
+    let appendMention = document.getElementById("textarea");
+
+    function myMention(e) {
+      let textArea = document.getElementById("textarea");
+
+      if(e.key == "@"){
+        if(dropdown){
+          dropdown.style.display = "block";
+        }
+      }
+
+      if(e.key == "Backspace"){
+        if(dropdown){
+          dropdown.style.display = "none";
+        }
+      }
+    }
+
+    function selectUser(user){
+      if(dropdown){
+        dropdown.style.display = "none";
+      }
+      appendMention.innerHTML += user;
+    }
+  </script>
+</body>
+</html>
